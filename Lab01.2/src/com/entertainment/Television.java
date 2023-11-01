@@ -76,21 +76,23 @@ public class Television {
     public boolean equals(Object obj) {
         boolean result = false;
 
-        // proceed only if ' obj' is really referencing Television object
-        if (obj != null && this.getClass() == obj.getClass()) { // this is an EXACT type check
-            // safely downcast 'obj' to more specific reference Television
+            // 'this' (me) and obj refer to the same physical object in memory!
+            if (this == obj) {
+            result = true; // and we're done, return  result (true)
+        }
+            // 'obj' is not-null and my Class object is the same as its Class object, proceed
+            // otherwise, skip this whole thing and return result (false)
+           else if  (obj != null && (this.getClass() == obj.getClass())) {
             Television other = (Television) obj;
 
             // do the checks: business equality is defined by brand, volume being the same
-            result = Objects.equals(this.getBrand(), other.getBrand()) && // null-safe check
+            result = Objects.equals(this.getBrand(), other.getBrand()) &&
                     this.getVolume() == other.getVolume();                 // primitive can't be null
 
         }
         return result;
 
     }
-
-
 
     @Override
     public String toString() {
