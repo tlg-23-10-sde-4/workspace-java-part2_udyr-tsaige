@@ -2,7 +2,14 @@ package com.entertainment;
 
 import java.util.Objects;
 
-public class Television {
+/*
+ * To be consistent with equals whatever fields we use for equals() and hashCode().
+ * we MUST use those same fields  for natural order.
+ *
+ * that's mean we'll switch to a primary sort key 'brand', and when tied on 'brand,'
+ * we break the tie vea secondary
+ */
+public class Television implements Comparable<Television> {
     // instance variables
     private String brand;
     private int volume;
@@ -70,8 +77,6 @@ public class Television {
         return Objects.hash(getBrand(),getVolume());
     }
 
-
-
     @Override
     public boolean equals(Object obj) {
         boolean result = false;
@@ -83,15 +88,28 @@ public class Television {
             // 'obj' is not-null and my Class object is the same as its Class object, proceed
             // otherwise, skip this whole thing and return result (false)
            else if  (obj != null && (this.getClass() == obj.getClass())) {
-            Television other = (Television) obj;
-
-            // do the checks: business equality is defined by brand, volume being the same
-            result = Objects.equals(this.getBrand(), other.getBrand()) &&
-                    this.getVolume() == other.getVolume();                 // primitive can't be null
+             Television other = (Television) obj;
+            result = Object.equals(this.getBrand(), other.getBrand()) &&
+                 this.getVolume() == other.getVolume();
 
         }
         return result;
 
+    }
+    /*
+     * Primary sort key 'brand' (String).
+     * Secondary sort key 'volume' (int).
+     */
+    @Override
+    public  int compareTo(Television other) {
+       int result = this.getBrand().compareTo(other.getBrand());
+
+       if (result == 0) { // tied on brand, i.e, they have the same brand
+           result = Integer.compare(this.getVolume(), other.getVolume());
+
+       }
+
+       return result;
     }
 
     @Override
