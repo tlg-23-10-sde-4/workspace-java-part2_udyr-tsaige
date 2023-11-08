@@ -38,9 +38,13 @@ import java.util.*;
  *   17       17    Dom        1    DEBIT_CARD
  */
 
-class Board {
+public class Board<racers> {
     private final Map<Integer,String> studentIdMap = loadStudentIdMap();
     private final Map<Integer,DuckRacer> racerMap  = new TreeMap<>();
+
+    public  int maxID() {
+    return studentIdMap.size();
+}
 
     /*
      * Updates the board (racerMap) by making a DuckRacer win
@@ -68,7 +72,7 @@ class Board {
 
     // shows the board data to the end user
     /*
-     * TODO: render the data show it looks like the board you see every day
+     * TODO: render the data so it looks like the board you see every day
      * This means "DuckRace Results"
      *
      * id  name  wins  rewards
@@ -81,20 +85,29 @@ class Board {
     public void show() {
         Collection<DuckRacer> racers = racerMap.values();
 
-        for (DuckRacer racer : racers) {
+        /*
+        if (racerMap.isEmpty()) {
+            System.out.println("\nThere are currently no results to show\n");
+        }
+
+    }
+       else {
+    }
+
+         */
+
+
+
+
+
+
+
+
+        for(DuckRacer racer : racers) {
             System.out.printf("%s  %s  %s  %s",
                     racer.getId(),racer.getName(),racer.getWins(),racer.getRewards());
 
         }
-
-    }
-
-
-    // TESTING PURPOSES ONLY
-    void dumpStudentIdMap() {
-        System.out.println(studentIdMap);
-
-    }
 
     private Map<Integer, String> loadStudentIdMap() {
         Map<Integer,String> idMap = new HashMap<>();
@@ -111,7 +124,6 @@ class Board {
                 idMap.put(Integer.valueOf(tokens[0]), tokens[1]);
 
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();
