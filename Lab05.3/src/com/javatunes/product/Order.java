@@ -24,6 +24,7 @@ public class Order {
         this.id = id;
         this.location = location;
     }
+
     /*
      * the TaxCalculator needed is a function of location
      * we'll fetch it from a factory instead of "new onlineTax()," etc., in here
@@ -55,9 +56,11 @@ public class Order {
     public String getId() {
         return id;
     }
+
     public Location getLocation() {
         return location;
     }
+
     public double getCost() {
         return cost;
     }

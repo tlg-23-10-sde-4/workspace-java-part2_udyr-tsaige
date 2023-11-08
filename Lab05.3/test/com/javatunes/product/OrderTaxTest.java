@@ -60,7 +60,7 @@ public class OrderTaxTest {
     @Test
     public void testTaxEuropeOrder() {
         Order order1 = new Order("order-1", Location.EUROPE);
-        order1 .processCart(cart1);
+        order1.processCart(cart1);
         assertEquals(3.4, order1.getTax(), .001);
 
         Order order2 = new Order("order-2", Location.EUROPE);

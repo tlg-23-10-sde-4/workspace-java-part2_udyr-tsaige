@@ -14,9 +14,9 @@ package com.javatunes.billing;
  * Luxury tax is an additional 25% on amount over $100.
  */
 public class EuropeTax implements TaxCalculator {
-    private  static  final double luxuryThreshold = 100.0;
-    private  static  final  double vatRate = 0.17;
-    private  static  final  double luxuryRate = 0.25;
+    private static final double luxuryThreshold = 100.0;
+    private static final double vatRate = 0.17;
+    private static final double luxuryRate = 0.25;
 
 
     @Override

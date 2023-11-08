@@ -13,9 +13,9 @@ package com.javatunes.billing;
  * The first $20.00 is tax-free.
  * Amount over $20.00 is taxed at 10.0%.
  */
-public class USATax implements TaxCalculator{
-    private  static  final  double taxThreshold = 20.0;
-    private  static  final  double taxRate = 0.1;
+public class USATax implements TaxCalculator {
+    private static final double taxThreshold = 20.0;
+    private static final double taxRate = 0.1;
 
 
     @Override
