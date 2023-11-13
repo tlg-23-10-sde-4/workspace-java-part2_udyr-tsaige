@@ -1,7 +1,6 @@
 package com.duckrace.app;
 
 import com.duckrace.Board;
-
 import java.awt.*;
 import java.util.Locale;
 import java.util.Scanner;
@@ -10,13 +9,14 @@ import com.duckrace.Reward;
 /*
  * Application "controller"
  * It directed the overall flow/sequence of the application.
- * and dies all user prompting.
+ * and does all user prompting.
  */
 
 
 public class DuckRaceApp {
-    private final Board bord = new Board();
+    private final Board board = Board.getInstance();
     private final Scanner scanner = new Scanner(System.in);
+    private final int maxId = board.maxID();
 
     public void execute() {
         welcome();
@@ -29,7 +29,7 @@ public class DuckRaceApp {
     }
 
     private void updateBoard(int id, Reward reward) {
-        bord.update(id, reward);
+        board.update(id, reward);
 
     }
 

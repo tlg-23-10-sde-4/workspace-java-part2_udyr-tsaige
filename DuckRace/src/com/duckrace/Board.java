@@ -1,6 +1,6 @@
 package com.duckrace;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -38,13 +38,41 @@ import java.util.*;
  *   17       17    Dom        1    DEBIT_CARD
  */
 
-public class Board<racers> {
+public class Board implements Serializable {
+    private static final String dataFilePath = "data/board.dat";
+    private static final String studentIdFilePath = "conf/student-ids.csv";
+
+    /*
+     * If data/board.dat exists, read that file into the board  object and return it
+     *  We will use javas built-in object serialization feature.
+     */
+
+    public static Board getInstance() {
+        Board board = null;
+
+        if (Files.exists(Path.of("data/board.dat"))) {
+            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
+                board = (Board) in.readObject();
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+
+            }
+        }
+        else {
+            board = new Board();
+
+    }
+        return board;
+
+}
     private final Map<Integer,String> studentIdMap = loadStudentIdMap();
     private final Map<Integer,DuckRacer> racerMap  = new TreeMap<>();
 
-    public  int maxID() {
-    return studentIdMap.size();
-}
+    // prevent instantiation form outside, it's only done in here
+    private Board() {
+    }
 
     /*
      * Updates the board (racerMap) by making a DuckRacer win
@@ -55,6 +83,8 @@ public class Board<racers> {
      *
      * Either way it needs to win
      */
+
+
     public void update(int id, Reward reward) {
         DuckRacer racer = null;
 
@@ -63,12 +93,38 @@ public class Board<racers> {
 
         }
         else { // id not present, so here create new DuckRacer
-           racer = new DuckRacer(id,studentIdMap.get(id));
+            racer = new DuckRacer(id,studentIdMap.get(id));
             racerMap.put(id,racer);  // easy to forget this step
 
         }
         racer.win(reward);
+        save();
     }
+
+    private void save() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataFilePath))){
+            out.writeObject(this);
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+   public Collection<DuckRacer> duckRacers() {
+    return racerMap.values();
+    }
+
+    public  int maxID() {
+        return studentIdMap.size();
+    }
+
+    private Map<Integer, String> loadStudentIdMap() {
+        Map<Integer,String> idMap = new HashMap<>();
+
+    }
+
 
     // shows the board data to the end user
     /*
@@ -97,12 +153,6 @@ public class Board<racers> {
          */
 
 
-
-
-
-
-
-
         for(DuckRacer racer : racers) {
             System.out.printf("%s  %s  %s  %s",
                     racer.getId(),racer.getName(),racer.getWins(),racer.getRewards());
@@ -115,7 +165,7 @@ public class Board<racers> {
 
         try {
             // read all lines form conf/students-ids.csv into a List<String>
-            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.csv"));
+            List<String> lines = Files.readAllLines(Path.of(studentIdFilePath));
 
             // for each line, split it into "tokens," i.e., "1,Aaron" is split into "1" and Aaron
             for (String line : lines) {
