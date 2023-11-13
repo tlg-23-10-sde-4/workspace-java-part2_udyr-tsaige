@@ -9,6 +9,7 @@
 package com.javatunes.catalog;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 // OF COURSE THIS CLASS DOESN'T COMPILE
 // Your first job is to fulfill the contract that this class has signed.
@@ -165,7 +166,9 @@ public class InMemoryCatalog implements Catalog {
      * TASK: determine average price of our low-cost, extensive catalog of music.
      */
     public double getAveragePrice() {
-        return 0.0;
+        return catalogData.stream()
+                .collect(Collectors.averagingDouble(MusicItem::getPrice));
+
     }
 
 

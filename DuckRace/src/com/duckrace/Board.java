@@ -82,7 +82,7 @@ public class Board<racers> {
      * 3 CJ       2     DEBIT_CARD, DEBIT_CARD
      *
      */
-    public void show() {
+    public Map<Integer, String> show() {
         Collection<DuckRacer> racers = racerMap.values();
 
         /*
