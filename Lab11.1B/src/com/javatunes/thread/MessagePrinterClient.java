@@ -9,16 +9,30 @@ package com.javatunes.thread;
 
 public class MessagePrinterClient {
 
-  public static void main(String[] args) {
-    // DONE: create two instances of your thread subclass and start them up
-    MessagePrinter printer1 = new MessagePrinter("Roses are red");  // take the default interval
-    MessagePrinter printer2 = new MessagePrinter("Violets are blue", 1375);
-    
-    printer1.start();
-    printer2.start();
-    
-    // just for demonstration purposes - this shows why you don't call run() directly
-    // printer1.run();
-    // printer2.run();
-  }
+    public static void main(String[] args) {
+       // 30 sec total
+        MessagePrinter printer1 = new MessagePrinter("roses are red ", 10, 3000);
+        Thread thd1 = new Thread(printer1);
+        thd1.setName("message -printer1");
+        thd1.start();
+        //printer1.start();
+
+        // 20 sec total
+        MessagePrinter printer2 = new MessagePrinter("violets are blue", 100, 200);
+        Thread thd2 = new Thread(printer2);
+        thd1.setName("message -printer2");
+        thd1.start();
+       // printer2.start();
+
+        // 10 times(default),1 second each = 10 sec
+       // MessagePrinter printer3 = new MessagePrinter("ill hand you a knife ");
+        Thread thd3 = new Thread((new MessagePrinter("ill hand you a knife"), "message-printer-3");
+       // printer3.start();
+
+        //32 secs
+        MessagePrinter printer4 = new MessagePrinter("and bid you a due,", 16, 2000);
+        Thread thd4 = new Thread(printer4, "message-printer-4");
+        thd4.start();
+        //printer4.start();
+    }
 }
